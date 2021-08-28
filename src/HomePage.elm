@@ -11,11 +11,9 @@ view model =
             [ text "Dunder Mifflin Inc. (stock symbol "
             , strong [] [ text "DMI" ]
             , text <|
-                """
-                ) is a micro-cap regional paper and office
+                """) is a micro-cap regional paper and office
                 supply distributor with an emphasis on servicing
-                small-business clients.
-                """
+                small-business clients."""
             ]
         ]
 

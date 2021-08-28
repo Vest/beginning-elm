@@ -4448,7 +4448,7 @@ var $author$project$HomePage$view = function (model) {
 							[
 								$elm$html$Html$text('DMI')
 							])),
-						$elm$html$Html$text('\n                ) is a micro-cap regional paper and office\n                supply distributor with an emphasis on servicing\n                small-business clients.\n                ')
+						$elm$html$Html$text(') is a micro-cap regional paper and office\n                supply distributor with an emphasis on servicing\n                small-business clients.')
 					]))
 			]));
 };
