@@ -17,6 +17,5 @@ view model =
             ]
         ]
 
-
 main =
     view "dummy model"

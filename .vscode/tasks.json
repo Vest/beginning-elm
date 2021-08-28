@@ -10,7 +10,7 @@
                 "make",
                 "src/HomePage.elm",
                 "--output",
-                "elm.js"
+                "elmbuild.js"
             ],
             "type": "shell",
             "problemMatcher": []
