@@ -25,9 +25,18 @@ computeTime startTime endTime =
     endTime - startTime
 
 
+add a b =
+    a + b
+
+
+multiply c d =
+    c * d
+
+
+divide e f =
+    e / f
+
+
 main : Html.Html msg
 main =
-    computeTime 2 3
-        |> computeSpeed 7.67
-        |> escapeEarth 11
-        |> Html.text
+    Html.text (String.fromFloat (add 5 (multiply 10 (divide 30 10))))
