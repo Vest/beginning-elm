@@ -83,5 +83,5 @@ weekday dayInNumber =
 
 main : Html.Html msg
 main =
-    escapeEarth 10 6.7 "low"
+    weekday 5
         |> Html.text
