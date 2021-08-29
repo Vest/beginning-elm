@@ -39,14 +39,17 @@ computeTime startTime endTime =
     endTime - startTime
 
 
+add : number -> number -> number
 add a b =
     a + b
 
 
+multiply : number -> number -> number
 multiply c d =
     c * d
 
 
+divide : Float -> Float -> Float
 divide e f =
     e / f
 
