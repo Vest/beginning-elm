@@ -12,8 +12,8 @@ escapeEarth myVelocity mySpeed fuelStatus =
         orbitalSpeedInKmPerSec =
             7.67
 
-        whereToLand fuel =
-            if fuel == "low" then
+        whereToLand =
+            if fuelStatus == "low" then
                 "Land on droneship"
 
             else
@@ -26,7 +26,7 @@ escapeEarth myVelocity mySpeed fuelStatus =
         "Stay in orbit"
 
     else
-        whereToLand fuelStatus
+        whereToLand
 
 
 computeSpeed : Float -> Float -> Float
