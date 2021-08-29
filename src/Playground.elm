@@ -27,4 +27,7 @@ computeTime startTime endTime =
 
 main : Html.Html msg
 main =
-    Html.text (escapeEarth 11 (computeSpeed 7.67 (computeTime 2 3)))
+    computeTime 2 3
+        |> computeSpeed 7.67
+        |> escapeEarth 11
+        |> Html.text
