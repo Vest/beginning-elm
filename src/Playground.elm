@@ -54,31 +54,32 @@ divide e f =
     e / f
 
 
-weekday : number -> String
+weekday : Int -> String
 weekday dayInNumber =
-    if dayInNumber == 0 then
-        "Sunday"
+    case dayInNumber of
+        0 ->
+            "Sunday"
 
-    else if dayInNumber == 1 then
-        "Monday"
+        1 ->
+            "Monday"
 
-    else if dayInNumber == 2 then
-        "Tuesday"
+        2 ->
+            "Tuesday"
 
-    else if dayInNumber == 3 then
-        "Wednesday"
+        3 ->
+            "Wednesday"
 
-    else if dayInNumber == 4 then
-        "Thursday"
+        4 ->
+            "Thursday"
 
-    else if dayInNumber == 5 then
-        "Friday"
+        5 ->
+            "Friday"
 
-    else if dayInNumber == 6 then
-        "Saturday"
+        6 ->
+            "Saturday"
 
-    else
-        "Unknown day"
+        _ ->
+            "Unknown day"
 
 
 main : Html.Html msg
