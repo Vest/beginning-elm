@@ -1,4 +1,10 @@
-module RippleCarryAdder exposing (andGate, halfAdder, inverter, orGate)
+module RippleCarryAdder exposing
+    ( andGate
+    , fullAdder
+    , halfAdder
+    , inverter
+    , orGate
+    )
 
 import Bitwise
 import Html exposing (b)
@@ -45,4 +51,21 @@ halfAdder a b =
     in
     { carry = carryOut
     , sum = sumDigit
+    }
+
+
+fullAdder : Int -> Int -> Int -> { carry : Int, sum : Int }
+fullAdder a b carryIn =
+    let
+        firstResult =
+            halfAdder b carryIn
+
+        secondResult =
+            halfAdder a firstResult.sum
+
+        finalCarry =
+            orGate firstResult.carry secondResult.carry
+    in
+    { carry = finalCarry
+    , sum = secondResult.sum
     }
