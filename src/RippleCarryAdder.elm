@@ -8,6 +8,7 @@ module RippleCarryAdder exposing
     , rippleCarryAdder
     )
 
+import Array
 import Bitwise
 import Html exposing (b)
 
@@ -81,20 +82,26 @@ fullAdder a b carryIn =
     }
 
 
-rippleCarryAdder : Binary -> Binary -> Int -> { carry : Int, sum0 : Int, sum1 : Int, sum2 : Int, sum3 : Int }
+rippleCarryAdder : Int -> Int -> Int -> { carry : Int, sum0 : Int, sum1 : Int, sum2 : Int, sum3 : Int }
 rippleCarryAdder a b carryIn =
     let
+        firstSignal =
+            extractDigits a
+
+        secondSignal =
+            extractDigits b
+
         firstResult =
-            fullAdder a.d3 b.d3 carryIn
+            fullAdder firstSignal.d3 secondSignal.d3 carryIn
 
         secondResult =
-            fullAdder a.d2 b.d2 firstResult.carry
+            fullAdder firstSignal.d2 secondSignal.d2 firstResult.carry
 
         thirdResult =
-            fullAdder a.d1 b.d1 secondResult.carry
+            fullAdder firstSignal.d1 secondSignal.d1 secondResult.carry
 
         finalResult =
-            fullAdder a.d0 b.d0 thirdResult.carry
+            fullAdder firstSignal.d0 secondSignal.d0 thirdResult.carry
     in
     { carry = finalResult.carry
     , sum0 = finalResult.sum
@@ -102,3 +109,40 @@ rippleCarryAdder a b carryIn =
     , sum2 = secondResult.sum
     , sum3 = firstResult.sum
     }
+
+
+extractDigits : Int -> Binary
+extractDigits number =
+    String.fromInt number
+        |> String.split ""
+        |> List.map stringToInt
+        |> Array.fromList
+        |> arrayToRecord
+
+
+stringToInt : String -> Int
+stringToInt string =
+    String.toInt string
+        |> Maybe.withDefault -1
+
+
+arrayToRecord : Array.Array Int -> Binary
+arrayToRecord array =
+    let
+        firstElement =
+            Array.get 0 array
+                |> Maybe.withDefault -1
+
+        secondElement =
+            Array.get 1 array
+                |> Maybe.withDefault -1
+
+        thirdElement =
+            Array.get 2 array
+                |> Maybe.withDefault -1
+
+        fourthElement =
+            Array.get 3 array
+                |> Maybe.withDefault -1
+    in
+    Binary firstElement secondElement thirdElement fourthElement
