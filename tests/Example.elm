@@ -7,13 +7,13 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    test "two plus two equals four"
-        (\_ -> Expect.equal 4 (2 + 2))
+    test "two plus two equals four" <|
+        \_ -> (2 + 2) |> Expect.equal 4
 
 
 guardianNames =
-    test "only 2 guardians have names with less than 6 characters"
-        (\_ ->
+    test "only 2 guardians have names with less than 6 characters" <|
+        \_ ->
             let
                 guardians =
                     [ "Star-lord", "Groot", "Gamora", "Drax", "Rocket" ]
@@ -23,4 +23,3 @@ guardianNames =
                 |> List.filter (\len -> len < 6)
                 |> List.length
                 |> Expect.equal 2
-        )
