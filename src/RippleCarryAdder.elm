@@ -1,13 +1,23 @@
 module RippleCarryAdder exposing
-    ( andGate
+    ( Binary
+    , andGate
     , fullAdder
     , halfAdder
     , inverter
     , orGate
+    , rippleCarryAdder
     )
 
 import Bitwise
 import Html exposing (b)
+
+
+type alias Binary =
+    { d0 : Int
+    , d1 : Int
+    , d2 : Int
+    , d3 : Int
+    }
 
 
 andGate : Int -> Int -> Int
@@ -68,4 +78,27 @@ fullAdder a b carryIn =
     in
     { carry = finalCarry
     , sum = secondResult.sum
+    }
+
+
+rippleCarryAdder : Binary -> Binary -> Int -> { carry : Int, sum0 : Int, sum1 : Int, sum2 : Int, sum3 : Int }
+rippleCarryAdder a b carryIn =
+    let
+        firstResult =
+            fullAdder a.d3 b.d3 carryIn
+
+        secondResult =
+            fullAdder a.d2 b.d2 firstResult.carry
+
+        thirdResult =
+            fullAdder a.d1 b.d1 secondResult.carry
+
+        finalResult =
+            fullAdder a.d0 b.d0 thirdResult.carry
+    in
+    { carry = finalResult.carry
+    , sum0 = finalResult.sum
+    , sum1 = thirdResult.sum
+    , sum2 = secondResult.sum
+    , sum3 = firstResult.sum
     }
