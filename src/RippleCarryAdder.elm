@@ -11,6 +11,7 @@ module RippleCarryAdder exposing
 import Array
 import Bitwise
 import Html exposing (b)
+import List exposing (sum)
 
 
 type alias Binary =
@@ -82,7 +83,7 @@ fullAdder a b carryIn =
     }
 
 
-rippleCarryAdder : Int -> Int -> Int -> { carry : Int, sum0 : Int, sum1 : Int, sum2 : Int, sum3 : Int }
+rippleCarryAdder : Int -> Int -> Int -> Int
 rippleCarryAdder a b carryIn =
     let
         firstSignal =
@@ -103,12 +104,10 @@ rippleCarryAdder a b carryIn =
         finalResult =
             fullAdder firstSignal.d0 secondSignal.d0 thirdResult.carry
     in
-    { carry = finalResult.carry
-    , sum0 = finalResult.sum
-    , sum1 = thirdResult.sum
-    , sum2 = secondResult.sum
-    , sum3 = firstResult.sum
-    }
+    [ finalResult, thirdResult, secondResult, firstResult ]
+        |> List.map .sum
+        |> (::) finalResult.carry
+        |> numberFromDigits
 
 
 extractDigits : Int -> Binary
@@ -146,3 +145,8 @@ arrayToRecord array =
                 |> Maybe.withDefault -1
     in
     Binary firstElement secondElement thirdElement fourthElement
+
+
+numberFromDigits : List Int -> Int
+numberFromDigits digitsList =
+    List.foldl (\digit number -> digit + 10 * number) 0 digitsList
