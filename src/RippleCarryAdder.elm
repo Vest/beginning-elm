@@ -113,6 +113,7 @@ rippleCarryAdder a b carryIn =
 extractDigits : Int -> Binary
 extractDigits number =
     String.fromInt number
+        |> String.padLeft 4 '0'
         |> String.split ""
         |> List.map stringToInt
         |> Array.fromList
