@@ -12,7 +12,8 @@ module RippleCarryAdder exposing
 import Array
 import Bitwise
 import Html exposing (b)
-import List exposing (sum)
+import Html.Attributes exposing (list)
+import List
 
 
 type alias Binary =
@@ -113,10 +114,8 @@ rippleCarryAdder a b carryIn =
 
 extractDigits : Int -> Binary
 extractDigits number =
-    String.fromInt number
-        |> String.padLeft 4 '0'
-        |> String.split ""
-        |> List.map stringToInt
+    digits number
+        |> padZeroes 4
         |> Array.fromList
         |> arrayToRecord
 
@@ -156,8 +155,22 @@ numberFromDigits digitsList =
 
 digits : Int -> List Int
 digits number =
-    if number == 0 then
-        []
+    let
+        getDigits n =
+            if n == 0 then
+                []
 
-    else
-        digits (number // 10) ++ [ remainderBy 10 number ]
+            else
+                remainderBy 10 n :: getDigits (n // 10)
+    in
+    getDigits number
+        |> List.reverse
+
+
+padZeroes : Int -> List Int -> List Int
+padZeroes total list =
+    let
+        numberOfZeroes =
+            total - List.length list
+    in
+    List.repeat numberOfZeroes 0 ++ list
