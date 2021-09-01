@@ -1,14 +1,8 @@
-module Example exposing (guardianNames, suite)
+module Example exposing (additionTests, guardianNames)
 
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
 import Test exposing (..)
-
-
-suite : Test
-suite =
-    test "two plus two equals four" <|
-        \_ -> (2 + 2) |> Expect.equal 4
 
 
 guardianNames =
@@ -23,3 +17,12 @@ guardianNames =
                 |> List.filter (\len -> len < 6)
                 |> List.length
                 |> Expect.equal 2
+
+
+additionTests =
+    describe "Addition"
+        [ test "two plus two equals four" <|
+            \_ -> (2 + 2) |> Expect.equal 4
+        , test "three plus four equals seven" <|
+            \_ -> (3 + 4) |> Expect.equal 7
+        ]
