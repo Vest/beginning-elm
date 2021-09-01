@@ -1,6 +1,7 @@
 module RippleCarryAdder exposing
     ( Binary
     , andGate
+    , digits
     , fullAdder
     , halfAdder
     , inverter
@@ -151,3 +152,12 @@ arrayToRecord array =
 numberFromDigits : List Int -> Int
 numberFromDigits digitsList =
     List.foldl (\digit number -> digit + 10 * number) 0 digitsList
+
+
+digits : Int -> List Int
+digits number =
+    if number == 0 then
+        []
+
+    else
+        digits (number // 10) ++ [ remainderBy 10 number ]
