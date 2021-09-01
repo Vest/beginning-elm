@@ -42,7 +42,7 @@ comparisonTests =
             \_ -> 11 |> Expect.atLeast 10
         , test "a list with zero elements is empty" <|
             \_ ->
-                List.isEmpty []
+                List.isEmpty [ "The Ancient One" ]
                     |> Expect.true "expected the list to be empty"
         , test "a list with some elements is not empty" <|
             \_ ->
