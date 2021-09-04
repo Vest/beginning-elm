@@ -4,9 +4,15 @@
 -}
 
 
-module Playground exposing (main)
+module Playground exposing
+    ( Greeting(..)
+    , add
+    , main
+    , sayHello
+    )
 
 import Html
+import MyList
 
 
 escapeEarth : Float -> Float -> String -> String
@@ -150,6 +156,21 @@ evilometer character1 character2 =
 
         _ ->
             GT
+
+
+type Greeting
+    = Howdy
+    | Hola
+
+
+sayHello : Greeting -> String
+sayHello greeting =
+    case greeting of
+        Howdy ->
+            "How y'all doin'?"
+
+        Hola ->
+            "Hola amigo!"
 
 
 main : Html.Html msg
