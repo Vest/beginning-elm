@@ -12,7 +12,7 @@ module Playground exposing
     )
 
 import Html
-import MyList
+import MyList exposing (MyList)
 
 
 escapeEarth : Float -> Float -> String -> String
@@ -173,9 +173,18 @@ sayHello greeting =
             "Hola amigo!"
 
 
+list1 : MyList.MyList a
+list1 =
+    MyList.Empty
+
+
+list2 : MyList.MyList number
+list2 =
+    MyList.Node 9 MyList.Empty
+
+
 main : Html.Html msg
 main =
-    [ "Night King", "Joffrey", "Ramsay" ]
-        |> List.sortWith evilometer
+    MyList.isEmpty list2
         |> Debug.toString
         |> Html.text
