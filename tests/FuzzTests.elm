@@ -1,6 +1,11 @@
-module FuzzTests exposing (addOneTests, addTests, flipTests)
+module FuzzTests exposing
+    ( addOneTests
+    , addTests
+    , flipTests
+    , multiplyFloatTests
+    )
 
-import Expect exposing (Expectation)
+import Expect exposing (Expectation, FloatingPointTolerance(..))
 import Fuzz exposing (..)
 import Http exposing (Expect)
 import Random exposing (maxInt, minInt)
@@ -75,4 +80,19 @@ flipTests =
         [ fuzz bool "negates the given boolean value" <|
             \value ->
                 flip value |> Expect.equal (not value)
+        ]
+
+
+multiplyFloat : Float -> Int -> Float
+multiplyFloat x y =
+    x * toFloat y
+
+
+multiplyFloatTests : Test
+multiplyFloatTests =
+    describe "multiplyFloat"
+        [ fuzz2 float int "multiplies given numbers" <|
+            \x y ->
+                multiplyFloat x y
+                    |> Expect.within (Absolute 0.000000001) (x * toFloat y)
         ]
