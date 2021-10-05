@@ -1,4 +1,4 @@
-module FuzzTests exposing (addOneTests, addTests)
+module FuzzTests exposing (addOneTests, addTests, flipTests)
 
 import Expect exposing (Expectation)
 import Fuzz exposing (..)
@@ -25,6 +25,9 @@ addOneTests =
         , fuzz (intRange minInt maxInt) "adds 1 to all integers" <|
             \num ->
                 addOne num |> Expect.equal (num + 1)
+        , fuzz frequencyFuzzer "adds 1 via fuzzier" <|
+            \num ->
+                addOne num |> Expect.equal (num + 1)
         ]
 
 
@@ -46,3 +49,30 @@ addOne x =
 add : Int -> Int -> Int
 add x y =
     x + y
+
+
+frequencyFuzzer : Fuzzer Int
+frequencyFuzzer =
+    frequency
+        [ ( 70, constant 7 )
+        , ( 12, intRange 8 9 )
+        , ( 6, constant 6 )
+        , ( 9, intRange 2 4 )
+        , ( 1, constant 5 )
+        , ( 1, constant 1 )
+        , ( 1, constant 10 )
+        ]
+
+
+flip : Bool -> Bool
+flip x =
+    not x
+
+
+flipTests : Test
+flipTests =
+    describe "flip"
+        [ fuzz bool "negates the given boolean value" <|
+            \value ->
+                flip value |> Expect.equal (not value)
+        ]
