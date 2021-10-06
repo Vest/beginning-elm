@@ -3,6 +3,8 @@ module FuzzTests exposing
     , addTests
     , flipTests
     , multiplyFloatTests
+    , pizzaLeftTests
+    , stringTests
     )
 
 import Expect exposing (Expectation, FloatingPointTolerance(..))
@@ -95,4 +97,51 @@ multiplyFloatTests =
             \x y ->
                 multiplyFloat x y
                     |> Expect.within (Absolute 0.000000001) (x * toFloat y)
+        , fuzz2 (floatRange -1.0 1.0) int "multiplies given numbers in range" <|
+            \x y ->
+                multiplyFloat x y
+                    |> Expect.within (Absolute 0.000000001) (x * toFloat y)
+        ]
+
+
+pizzaLeft : Float -> Float -> Float
+pizzaLeft eatenPercent totalSlices =
+    totalSlices - (eatenPercent * totalSlices)
+
+
+pizzaLeftTests : Test
+pizzaLeftTests =
+    describe "pizzaLeft"
+        [ fuzz2 percentage float "returns remaining pizza slices" <|
+            \eaten total ->
+                pizzaLeft eaten total
+                    |> Expect.within (Absolute 0.00001) (total * (1 - eaten))
+        ]
+
+
+stringTests : Test
+stringTests =
+    describe "The String module"
+        [ describe "String.reverse"
+            [ test "has no effect on a palindrome" <|
+                \_ ->
+                    let
+                        palindrome =
+                            "hannah"
+                    in
+                    palindrome
+                        |> String.reverse
+                        |> Expect.equal palindrome
+            , test "reverses a known string" <|
+                \_ ->
+                    "ABCDEFG"
+                        |> String.reverse
+                        |> Expect.equal "GFEDCBA"
+            , fuzz string "restores the original string if you run it again" <|
+                \randomlyGeneratedString ->
+                    randomlyGeneratedString
+                        |> String.reverse
+                        |> String.reverse
+                        |> Expect.equal randomlyGeneratedString
+            ]
         ]
