@@ -2,6 +2,7 @@ module FuzzTests exposing
     ( addOneTests
     , addTests
     , flipTests
+    , listLengthTests
     , multiplyFloatTests
     , pizzaLeftTests
     , stringTests
@@ -144,4 +145,15 @@ stringTests =
                         |> String.reverse
                         |> Expect.equal randomlyGeneratedString
             ]
+        ]
+
+
+listLengthTests : Test
+listLengthTests =
+    describe "List.length"
+        [ fuzz (list int) "never returns a negative value" <|
+            \intList ->
+                intList
+                    |> List.length
+                    |> Expect.atLeast 0
         ]
